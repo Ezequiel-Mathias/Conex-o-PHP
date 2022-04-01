@@ -42,7 +42,7 @@ include('conexaoMysql.php');
       if(mysqli_affected_rows($conexao))         //se teve uma linha afetada ou nao no bds = linha afeteda = se o banco recusou ou add a linha 'script';
       $statusResposta = true;
       }
-       fecharConexaoMysqli($conexao);
+      fecharConexaoMysql($conexao);
        return $statusResposta;
 
 
@@ -65,7 +65,7 @@ include('conexaoMysql.php');
       //Abre a conexao com o BD 
       $conexao = conexaoMysql();
         //script para deletar um registro no BD
-        $sql = "delete from tblcontatos were idcontatos = ".$id;
+        $sql = "delete from tblcontatos where idcontato = ".$id;
       //Valida se o script esta correto, sem erro de sintaxe e executa no BD
         if (mysqli_query($conexao, $sql)){
 
@@ -108,6 +108,39 @@ include('conexaoMysql.php');
         }
 
     
+    }
+
+
+    //função para buscar um contato no banco de dados atraves de um id do registro
+    function selectByIdContatos($id){
+
+      $conetion = conexaoMysql();            //abrindo conexao com bds
+
+       // script paralistar todos os dados do BD, tbm serve para fazer em ordem decrecente (order by idcontato desc)
+       $slq = "select * from tblcontatos where idcontato = ".$id ;
+
+       $result = mysqli_query($conetion,$slq);
+        if($result){
+           
+              if($rsdados = mysqli_fetch_assoc($result)){
+                      
+               $arreydados = array(
+                  "id" =>  $rsdados['idcontato'],
+                  "Nome"  =>$rsdados['nome'],
+                  "Telefone"  =>$rsdados['telefone'],
+                  "Celular"  =>$rsdados['celular'],
+                  "Email"  =>$rsdados['email'],
+                  "Obs"  =>$rsdados['obs']
+               );
+               
+             } 
+
+            //solicita o fechamento da conexao com o BD, importante  e obrigatorio por questoes de segurança !
+            fecharConexaoMysql($conetion);
+            return $arreydados;
+        }
+
+
     }
 
 

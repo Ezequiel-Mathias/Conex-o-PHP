@@ -75,8 +75,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                           }
                          
 
-                        break;
+                       
+                      }else if ($action == 'BUSCAR'){
+                         //Recebe o id do registro que devera ser excluido,
+                          //que foi enviado pela url no link da imagem
+                          //do excluir que foi acionado na index
+                          $idcontato = $_GET['id'];
+                          //Chama a função de excluir na controller
+                          $resposta = buscarContato($idcontato);
+
+                        //Ativando a utilização variavel de sessão no servidor
+                        session_start();
+                        //Guarda em uma variavel de sessao que o banco de dados retornou para buscar do id
+                        //Obs(essa variavel de sessão sera utilizada na index.php, para colocar nas caixas de texto)
+                        $_SESSION['dadosContato'] = $resposta;
+
+                      //Utilizando o require iremos apenas importar a tela da index,
+                      //assim não  havera um novo carregamento da pagina
+                        require_once('index.php');
+
                       }
+
+
+
+
+                    break;
             
     }
 }

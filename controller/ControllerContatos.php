@@ -55,8 +55,33 @@
         
  }
 
+ //função para buscar um contato atraves do id do registro
+ function buscarContato($id){
+
+    if($id != 0 && !empty($id) && is_numeric($id)){
+        //import do arquivo de contato
+        require_once('model/bd/contato.php');
+
+       $dados = selectByIdContatos($id);
 
 
+       //Valida se existem dados para serem devolvidos
+       if(!empty($dados)){
+        return $dados;
+       }
+       else{
+        return false;
+       }
+       
+
+ } else{
+    return array(
+        'idErro' => 4,
+        'message' => 'Não é possivel buscar um registro sem imformar um id valido.'
+    );
+   }
+
+ }
 
 
  function atualizarContatos(){

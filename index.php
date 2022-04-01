@@ -1,10 +1,39 @@
+<?php
+
+//Valida se a utilização de variaveis de sessão
+//esta vazia
+if(session_status()){
+    //Valida se a variavel de sessão dadosContato
+    //Não esta vazia
+    if(!empty($_SESSION['dadosContato'])){    
+    $id         =$_SESSION['dadosContato']['id'];
+    $nome       =$_SESSION['dadosContato']['Nome'];
+    $telefone   =$_SESSION['dadosContato']['Telefone'];
+    $celular    =$_SESSION['dadosContato']['Celular'];
+    $email      =$_SESSION['dadosContato']['Email'];
+    $obs        =$_SESSION['dadosContato']['Obs'];
+    }
+}
+
+
+
+
+
+?>
+
+
+
+
+
+
+
 <!DOCTYPE>
 <html lang="pt-br">
     <head>
         <meta charset="UTF-8">
         <title> Cadastro </title>
         <link rel="stylesheet" type="text/css" href="css/style.css">
-
+        <script src="JS/main.js" defer></script>
 
     </head>
     <body>
@@ -21,7 +50,7 @@
                             <label> Nome: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="text" name="txtNome" value="" placeholder="Digite seu Nome" maxlength="100">
+                            <input type="text" name="txtNome" value="<?=$nome?>" placeholder="Digite seu Nome" maxlength="100">
                         </div>
                     </div>
                                      
@@ -30,7 +59,7 @@
                             <label> Telefone: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtTelefone" value="">
+                            <input type="tel" name="txtTelefone" value="<?=$telefone?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -38,7 +67,7 @@
                             <label> Celular: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtCelular" value="">
+                            <input type="tel" name="txtCelular" value="<?=$celular?>">
                         </div>
                     </div>
                    
@@ -48,7 +77,7 @@
                             <label> Email: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="email" name="txtEmail" value="">
+                            <input type="email" name="txtEmail" value="<?=$email?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -56,7 +85,7 @@
                             <label> Observações: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <textarea name="txtObs" cols="50" rows="7"></textarea>
+                            <textarea name="txtObs" cols="50"  rows="7"><?=$obs?></textarea>
                         </div>
                     </div>
                     <div class="enviar">
@@ -96,9 +125,11 @@
                     <td class="tblColunas registros"><?=$item['Email']?></td>
                    
                     <td class="tblColunas registros">
+                        <a href="router.php?componente=contatos&action=buscar&id=<?=$item['id']?>">
                             <img src="img/edit.png" alt="Editar" title="Editar" class="editar">
-                            <a href="router.php?componente=contatos&action=deletar&id=<?=$item['id']?>">
-                            <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir">
+                        </a>
+                            <a onclick="return confirm('Deseja realmente excluir este item ?')" href="router.php?componente=contatos&action=deletar&id=<?=$item['id']?>">
+                            <img src="img/trash.png" alt="Excluir" title="Excluir" class="excluir" id="excluir">
                             </a>
                             <img src="img/search.png" alt="Visualizar" title="Visualizar" class="pesquisar">
                     </td>
