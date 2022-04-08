@@ -84,7 +84,56 @@
  }
 
 
- function atualizarContatos(){
+ function atualizarContatos($dadoscontatos, $id){
+      
+    if(!empty($dadoscontatos)){              //verificando se a caixa esta vazia     //empty = serve para verificar se o elemento esta vazio 
+
+
+        if(!empty($dadoscontatos['txtNome']) & !empty($dadoscontatos['txtCelular']) & !empty($dadoscontatos['txtEmail'])){
+
+            if(!empty($id) && $id != 0 && is_numeric($id)){
+   
+                $arreyDados = array(
+                "id" => $id,      
+                "nome" => $dadoscontatos['txtNome'],
+                "telefone" => $dadoscontatos['txtTelefone'],
+                "celular" => $dadoscontatos['txtCelular'],
+                "email" => $dadoscontatos['txtEmail'],
+                "obs" => $dadoscontatos['txtObs']
+                    
+                 );
+
+
+                    require_once('model/bd/contato.php');         //chamanda e mandando para a funcao insert la na model
+                    if(updateContato($arreyDados)){
+
+                        return true;
+
+                    }else{
+
+                            return array('idErro ' => 1, 
+                            'message' => 'nao foi possivel Atualizar os dados Os dados no banco' );     
+                    }
+
+                }else{
+                    return array(
+                        'idErro' => 4,
+                        'message' => 'Não é possivel excluir um registro sem imformar um id valido.'
+                    );
+                 }    
+
+             }
+             
+             else {
+
+              return array('idErro ' => 2,  'message' => 'existem campos obrigatorios que nao foram preenchidos');
+
+             }
+
+
+
+    }
+
      
  }
 
@@ -124,3 +173,5 @@
         return false;
     }
 }
+
+

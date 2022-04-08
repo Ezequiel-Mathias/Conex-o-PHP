@@ -52,7 +52,32 @@ include('conexaoMysql.php');
                                                                                                                                                                                             
                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
-    function updateContato(){
+    function updateContato($dadocontatos){
+
+      $statusResposta = (boolean) false;
+
+       // conexao esta recebendo o retorn na fuction conexaoMysql(); // abrindo conexao com o bds
+       $conexao = conexaoMysql();
+
+      $sql = "update tblcontatos set
+         nome = '".$dadocontatos{'nome'}."',
+         telefone = '".$dadocontatos{'telefone'}."', 
+         celular = '".$dadocontatos{'celular'}."', 
+         email = '".$dadocontatos['email']."', 
+         obs = '".$dadocontatos{'obs'}."'
+         where idcontato =" . $dadocontatos['id'];
+         
+
+    
+
+      //se deu certo ou se deu erro no script
+      if(mysqli_query($conexao,$sql)){// executa o escrip no bds , mysqli_query(QUALBANCODEDADOS,QUAISDADOS);  
+              
+      if(mysqli_affected_rows($conexao))         //se teve uma linha afetada ou nao no bds = linha afeteda = se o banco recusou ou add a linha 'script';
+      $statusResposta = true;
+      }
+      fecharConexaoMysql($conexao);
+       return $statusResposta;
         
     }
 

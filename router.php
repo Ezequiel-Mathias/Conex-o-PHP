@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                                 </script>");
 
                                } 
-                        }else if ($action == 'DELETAR') {
+                        }elseif ($action == 'DELETAR') {
                           //Recebe o id do registro que devera ser excluido,
                           //que foi enviado pela url no link da imagem
                           //do excluir que foi acionado na index
@@ -76,7 +76,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                          
 
                        
-                      }else if ($action == 'BUSCAR'){
+                      }elseif ($action == 'BUSCAR'){
                          //Recebe o id do registro que devera ser excluido,
                           //que foi enviado pela url no link da imagem
                           //do excluir que foi acionado na index
@@ -93,6 +93,28 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                       //Utilizando o require iremos apenas importar a tela da index,
                       //assim não  havera um novo carregamento da pagina
                         require_once('index.php');
+
+                      }elseif($action == 'EDITAR'){
+                        //recebe o id que foi emcaminhado no action do form pela URL
+                        $idcontato = $_GET['id'];
+
+                        //Chama A função atualizarContato
+                        $resposta =  atualizarContatos($_POST , $idcontato);                                // esta colocando o return do inserirContatos na variavel %resposta
+
+                        if(is_bool($resposta)){                                       // verificando se o return é booleano 
+                           echo("<script>
+                                  alert('REGISTRO ATUALIZADO COM SUCESSO');
+                                  window.location.href = 'index.php';
+                                  </script>");
+
+                        }elseif(is_array($resposta)){                                      // (se nao) / verificando se o return é um arrey
+
+                         echo("<script>
+                         alert('".$resposta['message']."');
+                         window.history.back();
+                         </script>");
+
+                        } 
 
                       }
 

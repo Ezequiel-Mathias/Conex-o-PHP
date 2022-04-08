@@ -1,20 +1,60 @@
 <?php
 
+//Formas para resolver o problema das caixas com variaveis iniciais não definidas!
+//1 Forma *
+// Declarar as variaveis nome, telefone,celular,email,obs como null string ex:
+/* $nome = (string) null;
+$telefone = (string) null;
+$celular = (string) null; */
+//(forma consideravel correta)
+
+
+
+//2 Forma *
+// @ basta ir la em baixo (na index, parte do html) e colocar o @ ex: 
+/* //<?=@$nome?> */ 
+//(forma consideravel errada)
+
+
+//3 Forma *
+//if ternario (na index, parte do html)
+//ex:
+/* <?=isset($nome)?$nome:null?> */
+//(forma mais consederavel certa!)
+//isso quer dizer que, a variavel nome esta criada ? se sim pode correr normalmente, se não recebe null
+
+
+
 //Valida se a utilização de variaveis de sessão
 //esta vazia
+
+
+//essa variavel foi criada para diferenciar no action do formulario
+//qual ação deveria ser levada para a router (inserir ou editar).
+//Nas condiçoes abaixo, mudados o action dessa variavel para a ação de editar
+
+$form = (string) "router.php?componente=contatos&action=inserir";
+
 if(session_status()){
     //Valida se a variavel de sessão dadosContato
     //Não esta vazia
-    if(!empty($_SESSION['dadosContato'])){    
+    if(!empty($_SESSION['dadosContato']))
+    {    
     $id         =$_SESSION['dadosContato']['id'];
     $nome       =$_SESSION['dadosContato']['Nome'];
     $telefone   =$_SESSION['dadosContato']['Telefone'];
     $celular    =$_SESSION['dadosContato']['Celular'];
     $email      =$_SESSION['dadosContato']['Email'];
     $obs        =$_SESSION['dadosContato']['Obs'];
-    }
-}
 
+    //Mudamos a ação do form para edita o registro no click do botão salvar
+$form = "router.php?componente=contatos&action=editar&id=".$id;
+
+//Destroi uma variavel da memoria do servidor 
+unset($_SESSION['dadosContato']);
+    }
+
+}
 
 
 
@@ -44,13 +84,13 @@ if(session_status()){
                 
             </div>
             <div id="cadastroInformacoes">
-                <form  action="router.php?componente=contatos&action=inserir" name="frmCadastro" method="post" >
+                <form  action="<?=$form?>" name="frmCadastro" method="post" >
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Nome: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="text" name="txtNome" value="<?=$nome?>" placeholder="Digite seu Nome" maxlength="100">
+                            <input type="text" name="txtNome" value="<?=isset($nome)?$nome:null?>" placeholder="Digite seu Nome" maxlength="100">
                         </div>
                     </div>
                                      
@@ -59,7 +99,7 @@ if(session_status()){
                             <label> Telefone: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtTelefone" value="<?=$telefone?>">
+                            <input type="tel" name="txtTelefone" value="<?=isset($telefone)?$telefone:null?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -67,7 +107,7 @@ if(session_status()){
                             <label> Celular: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="tel" name="txtCelular" value="<?=$celular?>">
+                            <input type="tel" name="txtCelular" value="<?=isset($celular)?$celular:null?>">
                         </div>
                     </div>
                    
@@ -77,7 +117,7 @@ if(session_status()){
                             <label> Email: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <input type="email" name="txtEmail" value="<?=$email?>">
+                            <input type="email" name="txtEmail" value="<?=isset($email)?$email:null?>">
                         </div>
                     </div>
                     <div class="campos">
@@ -85,7 +125,7 @@ if(session_status()){
                             <label> Observações: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
-                            <textarea name="txtObs" cols="50"  rows="7"><?=$obs?></textarea>
+                            <textarea name="txtObs" cols="50"  rows="7"><?=isset($obs)?$obs:null?></textarea>
                         </div>
                     </div>
                     <div class="enviar">
