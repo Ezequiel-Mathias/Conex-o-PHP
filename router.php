@@ -33,8 +33,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
 
                         if($action == 'INSERIR'){
 
-
-                         $resposta =  inserirContatos($_POST);                                // esta colocando o return do inserirContatos na variavel %resposta
+                          if(isset($_FILES) && !empty($_FILES)){
+                            //Chama a função de inserir na comtroller 
+                            $resposta = inserirContatos($_POST,$_FILES);
+                          }else{
+                            $resposta = inserirContatos($_POST, null);
+                          }
+                                                         // esta colocando o return do inserirContatos na variavel %resposta
 
                                if(is_bool($resposta)){                                       // verificando se o return é booleano 
                                   echo("<script>

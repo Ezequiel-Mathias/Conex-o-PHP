@@ -84,7 +84,8 @@ unset($_SESSION['dadosContato']);
                 
             </div>
             <div id="cadastroInformacoes">
-                <form  action="<?=$form?>" name="frmCadastro" method="post" >
+            <!--  o enctype="multipart/form-data" no form é obrigatorio para enviar arquivos do formulario em html para o servidor. -->
+                <form  action="<?=$form?>" name="frmCadastro" method="post" enctype="multipart/form-data" >
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
                             <label> Nome: </label>
@@ -122,12 +123,22 @@ unset($_SESSION['dadosContato']);
                     </div>
                     <div class="campos">
                         <div class="cadastroInformacoesPessoais">
+                            <label> Escolha um arquinho</label>
+                        </div>
+                        <div class="cadastroEntradaDeDados">
+                        <!-- o accept serve para colocar as extençoes qye vai poder aceitar quando fizer o uploud de imagens -->
+                            <input type="file" name="flefoto" accept=".jpg, .png, .jpeg, .gif">
+                        </div>
+                    </div>
+                    <div class="campos">
+                        <div class="cadastroInformacoesPessoais">
                             <label> Observações: </label>
                         </div>
                         <div class="cadastroEntradaDeDados">
                             <textarea name="txtObs" cols="50"  rows="7"><?=isset($obs)?$obs:null?></textarea>
                         </div>
                     </div>
+                    
                     <div class="enviar">
                         <div class="enviar">
                             <input type="submit" name="btnEnviar" value="Salvar">
