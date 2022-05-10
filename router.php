@@ -60,8 +60,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                           //que foi enviado pela url no link da imagem
                           //do excluir que foi acionado na index
                           $idcontato = $_GET['id'];
+                          $foto = $_GET['foto'];
 
-                          $resposta = excluirContatos($idcontato);
+                          //Criamos um array para emcaminhar os valores do id e da foto
+                          //para a controller
+                          $arrayDados = array(
+                            "id" => $idcontato,
+                            "foto" => $foto
+
+                          );
+
+                          $resposta = excluirContatos($arrayDados , $foto);
 
                           if (is_bool($resposta))
                           {
@@ -86,6 +95,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                           //que foi enviado pela url no link da imagem
                           //do excluir que foi acionado na index
                           $idcontato = $_GET['id'];
+                          
                           //Chama a função de excluir na controller
                           $resposta = buscarContato($idcontato);
 
@@ -102,6 +112,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET' )
                       }elseif($action == 'EDITAR'){
                         //recebe o id que foi emcaminhado no action do form pela URL
                         $idcontato = $_GET['id'];
+
+                        $foto = $_GET['foto'];
+
+                          //Criamos um array para emcaminhar os valores do id e da foto
+                          //para a controller
+                          $arrayDados = array(
+                            "id" => $idcontato,
+                            "foto" => $foto,
+                            "file" => $file
+                          );
 
                         //Chama A função atualizarContato
                         $resposta =  atualizarContatos($_POST , $idcontato);                                // esta colocando o return do inserirContatos na variavel %resposta

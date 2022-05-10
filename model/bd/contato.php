@@ -7,7 +7,7 @@
  * Versão: 1.0
  ***********************************************************************************/
 
-include('conexaoMysql.php');
+require_once('conexaoMysql.php');
 
 // funcoes para realizar  no banco de dados
 
@@ -26,7 +26,8 @@ include('conexaoMysql.php');
          telefone, 
          celular , 
          email , 
-         obs)
+         obs,
+         idestado)
 
       value 
 
@@ -34,6 +35,7 @@ include('conexaoMysql.php');
          '".$dadocontatos{'telefone'}."', 
          '".$dadocontatos{'celular'}."', 
          '".$dadocontatos['email']."',
+         '".$dadocontatos['idestado']."',
          '".$dadocontatos{'obs'}."');";
 
       //se deu certo ou se deu erro no script
@@ -64,7 +66,9 @@ include('conexaoMysql.php');
          telefone = '".$dadocontatos{'telefone'}."', 
          celular = '".$dadocontatos{'celular'}."', 
          email = '".$dadocontatos['email']."', 
-         obs = '".$dadocontatos{'obs'}."'
+         obs = '".$dadocontatos{'obs'}."',
+         idestado = '".$dadocontatos{'idestado'}."'
+         
          where idcontato =" . $dadocontatos['id'];
          
 
@@ -122,7 +126,10 @@ include('conexaoMysql.php');
                   "Telefone"  =>$rsdados['telefone'],
                   "Celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
-                  "Obs"  =>$rsdados['obs']
+                  "Obs"  =>$rsdados['obs'],
+                  "foto" => $rsdados['foto'],
+                  "idestado" => $rsdados['idestado']
+
                );
                $cont++;
             } 
@@ -155,7 +162,9 @@ include('conexaoMysql.php');
                   "Telefone"  =>$rsdados['telefone'],
                   "Celular"  =>$rsdados['celular'],
                   "Email"  =>$rsdados['email'],
-                  "Obs"  =>$rsdados['obs']
+                  "Obs"  =>$rsdados['obs'],
+                  "foto" => $rsdados['foto'],
+                  "idestado" => $rsdados['idestado']
                );
                
              } 
